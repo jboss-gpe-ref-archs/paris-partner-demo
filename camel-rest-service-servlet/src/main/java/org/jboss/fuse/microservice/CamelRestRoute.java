@@ -22,6 +22,5 @@ public class CamelRestRoute extends RouteBuilder {
                 .log(LoggingLevel.DEBUG,"HTTP Path : ${header.CamelHttpPath}")
                 .log(LoggingLevel.DEBUG,"HTTP Uri : ${header.CamelHttpUri}")
                 .beanRef("service","helloWorld");
-
     }
 }

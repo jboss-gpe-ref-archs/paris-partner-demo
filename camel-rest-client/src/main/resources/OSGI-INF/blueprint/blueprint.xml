@@ -48,7 +48,8 @@
             <log message="Uri + Path : ${header.CamelHttpUri}${header.CamelHttpPath}"/>
             <to uri="netty4-http:http://localhost:8181?synchronous=true"/>
             -->
-            <log message="Response : ${body}"/>
+            <log message="Response : ${body} - Headers : ${headers}"/>
+            <removeHeaders pattern="*.firedTime"/>
         </route>
     </camelContext>
 

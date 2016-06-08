@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jboss.fuse</groupId>
         <artifactId>microservice</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>camel-rest-service-standalone</artifactId>
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>org.jboss.fuse</groupId>
             <artifactId>common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
 
         <!-- camel -->
@@ -158,6 +158,7 @@
                     <profile>micro-camel-standalone</profile>
                     <version>1.0</version>
                     <features>camel-jetty</features>
+                    <bundles>mvn:org.jboss.fuse/common/1.0</bundles>
                 </configuration>
             </plugin>
 
