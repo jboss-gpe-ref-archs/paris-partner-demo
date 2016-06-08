@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.0.0 ">
+
+    <feature name="lib" version="${project.version}">
+        <feature version="[3.0,4.0)">spring</feature>
+        <feature version="[1.2,2.0)">spring-dm</feature>
+        <feature version="[2.10,3)">camel</feature>
+        <bundle>mvn:org.jboss.fuse/common/${project.version}</bundle>
+        <configfile finalname="/etc/parameters.cfg">mvn:org.jboss.fuse/camel-assembly/${project.version}/cfg/parameters</configfile>
+    </feature>
+
+    <feature name="micro-camel-client" version="${project.version}">
+        <feature>lib</feature>
+        <!--<feature version="[2.10,3)">camel-netty4-http</feature>-->
+        <feature version="[2.10,3)">camel-http4</feature>
+        <bundle>mvn:org.jboss.fuse/camel-rest-client/${project.version}</bundle>
+    </feature>
+
+    <feature name="micro-camel-service-servlet" version="1.0">
+        <feature>lib</feature>
+        <feature version="[2.10,3)">camel-servlet</feature>
+        <bundle>mvn:org.jboss.fuse/camel-rest-service-servlet/${project.version}</bundle>
+    </feature>
+
+    <feature name="micro-camel-service-standalone" version="1.0">
+        <feature>lib</feature>
+        <feature version="[2.10,3)">camel-jetty</feature>
+        <bundle>mvn:org.jboss.fuse/camel-rest-service-standalone/${project.version}</bundle>
+    </feature>
+
+</features>
