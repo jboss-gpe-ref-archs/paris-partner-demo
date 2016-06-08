@@ -1,33 +1,49 @@
 # Compile 
 
-mvn -Pinstall
+    mvn -Pinstall
 
 # Microservice Client with REST Servlet component 
 
-features:addurl mvn:org.jboss.fuse/camel-assembly/1.0/xml/features
-features:install micro-camel-service-servlet 
-features:install micro-camel-client
+    features:addurl mvn:org.jboss.fuse/camel-assembly/1.0/xml/features
+    features:install micro-camel-service-servlet 
+    features:install micro-camel-client
 
 # Test service
 
-http http://localhost:7777/camel/client?user=charles
-jcurl http://localhost:7777/camel/client?user=charles
-jcurl -G http://localhost:7777/camel/client --data-urlencode "user=Charles Moulliard"
+* Using the HTTP Proxy Server
+ 
+    ```
+    http http://localhost:7777/camel/client?user=charles
+    jcurl http://localhost:7777/camel/client?user=charles
+    jcurl -G http://localhost:7777/camel/client --data-urlencode "user=Charles Moulliard"
+    ```
 
-http http://localhost:8181/camel/rest/users/charles/hello
-jcurl http://localhost:8181/camel/rest/users/charles/hello
+* Accessing directly the REST endpoint
+
+    ```
+    http http://localhost:8181/camel/rest/users/charles/hello
+    jcurl http://localhost:8181/camel/rest/users/charles/hello
+    ```
 
 # Microservice Client with Jetty Standalone 
 
+* Install on Fuse 
+
+```
 features:addurl mvn:org.jboss.fuse/camel-assembly/1.0/xml/features
 features:install micro-camel-service-standalone 
 features:install micro-camel-client
+```
 
+* Curl/http requests
+
+```
 http http://localhost:7777/camel/client?user=charles
 jcurl http://localhost:7777/camel/client?user=charles
 
 http http://localhost:9090/camel/rest/users/charles/hello
 jcurl http://localhost:9090/camel/rest/users/charles/hello
+```
 
 # Microservice Client with Jetty Secured (JAAS + SSL) 
 
