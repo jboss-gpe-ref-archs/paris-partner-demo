@@ -41,6 +41,13 @@ jcurl -k -u admin:admin https://localhost:9191/camel/rest/users/charles/hello
 
 mvn -Pf8-deploy
 
+killall java
+rm -rf data
+rm -rf instances/
+
+./bin/deletefabric8
+fabric:create -r localip -m 127.0.0.1
+
 
 # All - To control/check if the project is working
 
