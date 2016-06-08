@@ -12,7 +12,7 @@ public class Message {
         ObjectMapper mapper = new ObjectMapper();
         Response response = new Response();
         response.setId(id);
-        response.setMessage("Hellow World");
+        response.setMessage("Hello World");
 
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(response);
 
