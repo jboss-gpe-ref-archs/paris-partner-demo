@@ -12,6 +12,7 @@ features:install micro-camel-client
 
 http http://localhost:7777/camel/client?user=charles
 jcurl http://localhost:7777/camel/client?user=charles
+jcurl -G http://localhost:7777/camel/client --data-urlencode "user=Charles Moulliard"
 
 http http://localhost:8181/camel/rest/users/charles/hello
 jcurl http://localhost:8181/camel/rest/users/charles/hello
