@@ -14,12 +14,12 @@ public class CamelRestRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         restConfiguration()
-            .component("jetty").contextPath("/camel/rest").scheme("http")
+            .component("jetty")
             .host(HOST)
             .setPort(PORT);
 
         // use the rest DSL to define the rest services
-        rest("/users")
+        rest("/camel/rest/users")
             .get("/{id}/hello")
                 .route()
                 .log(LoggingLevel.DEBUG,"HTTP Path : ${header.CamelHttpPath}")

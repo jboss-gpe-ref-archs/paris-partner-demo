@@ -46,8 +46,17 @@ rm -rf data
 rm -rf instances/
 
 ./bin/deletefabric8
-fabric:create -r localip -m 127.0.0.1
+fabric:create -r localip -m 127.0.0.1 --wait-for-provisioning
+fabric:profile-edit --pid io.fabric8.elasticsearch-insight/network.host=127.0.0.1 insight-elasticsearch.datastore
 
+fabric:profile-edit --pid parameters/server-port=8183 micro-camel-client
+
+fabric:container-create-child --jmx-user admin --jmx-password admin --profile micro-camel-servlet root rest-servlet
+fabric:container-create-child --jmx-user admin --jmx-password admin --profile micro-camel-client root rest-client
+
+fabric:container-add-profile root insight-console insight-elasticsearch.datastore insight-elasticsearch.node insight-logs.elasticsearch insight-metrics.elasticsearch
+fabric:container-add-profile rest-client insight-camel insight-elasticsearch.node insight-logs.elasticsearch insight-metrics.elasticsearch
+fabric:container-add-profile rest-servlet insight-camel insight-elasticsearch.node insight-logs.elasticsearch insight-metrics.elasticsearch
 
 # All - To control/check if the project is working
 
@@ -58,6 +67,6 @@ features:install micro-camel-service-standalone-secured
 
 http http://localhost:8181/camel/rest/users/charles/hello
 http http://localhost:9090/camel/rest/users/charles/hello
-http http://localhost:9191/camel/rest/users/charles/hello
-http -a admin:admin http://localhost:9191/camel/rest/users/charles/hello
+http --verify=no https://localhost:9191/camel/rest/users/charles/hello
+http --verify=no -a admin:admin https://localhost:9191/camel/rest/users/charles/hello
 

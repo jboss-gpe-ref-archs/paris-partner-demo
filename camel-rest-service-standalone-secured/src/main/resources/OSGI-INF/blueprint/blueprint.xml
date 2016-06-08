@@ -14,7 +14,7 @@
 
     <bean id="camelRestRoute" class="org.jboss.fuse.microservice.CamelRestRoute"/>
 
-    <bean id="loginService" class="org.eclipse.jetty.jaas.JAASLoginService">
+    <bean id="loginService" class="org.eclipse.jetty.plus.jaas.JAASLoginService">
         <property name="name" value="karaf"/>
         <property name="loginModuleName" value="karaf"/>
         <property name="roleClassNames">
