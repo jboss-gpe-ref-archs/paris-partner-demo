@@ -10,6 +10,9 @@ features:install micro-camel-client
 
 # Test service
 
+http http://localhost:7777/camel/client?user=charles
+jcurl http://localhost:7777/camel/client?user=charles
+
 http http://localhost:8181/camel/rest/users/charles/hello
 jcurl http://localhost:8181/camel/rest/users/charles/hello
 
@@ -18,6 +21,9 @@ jcurl http://localhost:8181/camel/rest/users/charles/hello
 features:addurl mvn:org.jboss.fuse/camel-assembly/1.0/xml/features
 features:install micro-camel-service-standalone 
 features:install micro-camel-client
+
+http http://localhost:7777/camel/client?user=charles
+jcurl http://localhost:7777/camel/client?user=charles
 
 http http://localhost:9090/camel/rest/users/charles/hello
 jcurl http://localhost:9090/camel/rest/users/charles/hello
@@ -41,13 +47,10 @@ jcurl -k -u admin:admin https://localhost:9191/camel/rest/users/charles/hello
 
 mvn -Pf8-deploy
 
-killall java
-rm -rf data
-rm -rf instances/
-
 ./bin/deletefabric8
 ./bin/fuse
-fabric:create --wait-for-provisioning 
+
+#fabric:create --wait-for-provisioning 
 fabric:create -r localip -m 127.0.0.1 --wait-for-provisioning
 fabric:profile-edit --pid io.fabric8.elasticsearch-insight/network.host=127.0.0.1 insight-elasticsearch.datastore
 
@@ -55,8 +58,8 @@ fabric:container-create-child --jmx-user admin --jmx-password admin --profile mi
 fabric:container-create-child --jmx-user admin --jmx-password admin --profile micro-camel-client root rest-client
 
 fabric:container-add-profile root insight-console insight-elasticsearch.datastore insight-logs.elasticsearch insight-metrics.elasticsearch
-fabric:container-add-profile rest-client insight-camel insight-elasticsearch.node insight-logs.elasticsearch insight-metrics.elasticsearch
 fabric:container-add-profile rest-servlet insight-camel insight-elasticsearch.node insight-logs.elasticsearch insight-metrics.elasticsearch
+fabric:container-add-profile rest-client insight-camel insight-elasticsearch.node insight-logs.elasticsearch insight-metrics.elasticsearch
 
 fabric:container-remove-profile root insight-console insight-elasticsearch.datastore insight-logs.elasticsearch insight-metrics.elasticsearch
 fabric:container-remove-profile rest-client insight-camel insight-elasticsearch.node insight-logs.elasticsearch insight-metrics.elasticsearch
@@ -77,6 +80,13 @@ http --verify=no https://localhost:9191/camel/rest/users/charles/hello
 http --verify=no -a admin:admin https://localhost:9191/camel/rest/users/charles/hello
 
 # Security with Apiman
+
+rm -rf wildfly-10.0.0.Final
+unzip wildfly-10.0.0.Final.zip
+unzip -o apiman-distro-wildfly10-1.2.6.Final-overlay.zip -d wildfly-10.0.0.Final
+cd wildfly-10.0.0.Final
+./bin/standalone.sh -c standalone-apiman.xml
+
 
 * Without basic Auth
 

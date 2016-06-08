@@ -10,11 +10,7 @@
               http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
     <!-- OSGI blueprint property placeholder -->
-    <cm:property-placeholder id="parameters" persistent-id="parameters" update-strategy="reload">
-        <cm:default-properties>
-            <cm:property name="server-port" value="8181"/>
-        </cm:default-properties>
-    </cm:property-placeholder>
+    <cm:property-placeholder id="parameters" persistent-id="parameters" update-strategy="reload"/>
 
     <bean id="util" class="org.jboss.fuse.SomeBean"/>
 
@@ -24,33 +20,32 @@
         <propertyPlaceholder id="properties" location="blueprint:parameters"/>
 
         <route>
-            <from uri="timer:foo?period=15000"/>
+            <from uri="netty4-http://http://localhost:7777/camel/client"/>
+
             <setHeader headerName="user">
-                <method beanType="org.jboss.fuse.SomeBean" method="getRandomUser"/>
-            </setHeader>
-            <setHeader headerName="CamelHttpMethod">
-                <constant>GET</constant>
+                <method beanType="org.jboss.fuse.SomeBean" method="getUser"/>
             </setHeader>
 
-            <!-- HTTP4 -->
-            <setHeader headerName="CamelHttpPath">
-                <simple>/users/${header.user}/hello</simple>
+            <!-- HTTP Request -->
+            <setHeader headerName="CamelHttpMethod">
+                <constant>GET</constant>
             </setHeader>
             <setHeader headerName="CamelHttpUri">
                 <constant>http://localhost:{{server-port}}/camel/rest</constant>
             </setHeader>
-            <log message="Uri + Path : ${header.CamelHttpUri}${header.CamelHttpPath}"/>
-            <to uri="http4://service"/>
-            <!--  Netty
-            <setHeader headerName="CamelHttpUrl">
-                <constant>http://localhost:8181/camel/rest</constant>
+            <setHeader headerName="CamelHttpPath">
+                <simple>/users/${header.user}/hello</simple>
             </setHeader>
-            <log message="Uri + Path : ${header.CamelHttpUri}${header.CamelHttpPath}"/>
-            <to uri="netty4-http:http://localhost:8181?synchronous=true"/>
-            -->
-            <log message="Response : ${body} - Headers : ${headers}"/>
-            <removeHeaders pattern="*.firedTime"/>
+            <to uri="http4://service"/>
         </route>
     </camelContext>
+
+    <!--  Netty
+      <setHeader headerName="CamelHttpUrl">
+          <constant>http://localhost:8181/camel/rest</constant>
+      </setHeader>
+      <log message="Uri + Path : ${header.CamelHttpUri}${header.CamelHttpPath}"/>
+      <to uri="netty4-http:http://localhost:8181?synchronous=true"/>
+    -->
 
 </blueprint>

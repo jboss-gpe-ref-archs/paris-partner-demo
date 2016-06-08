@@ -22,6 +22,7 @@ public class CamelRestRoute extends RouteBuilder {
         rest("/camel/rest/users")
             .get("/{id}/hello")
                 .route()
+                .log("!! Request processd by the Camel REST Jetty")
                 .log(LoggingLevel.DEBUG,"HTTP Path : ${header.CamelHttpPath}")
                 .log(LoggingLevel.DEBUG,"HTTP Uri : ${header.CamelHttpUri}")
                 .beanRef("service","helloWorld");

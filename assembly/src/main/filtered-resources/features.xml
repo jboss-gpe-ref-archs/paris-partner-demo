@@ -13,7 +13,7 @@
 
     <feature name="micro-camel-client" version="${project.version}">
         <feature>lib</feature>
-        <!--<feature version="[2.10,3)">camel-netty4-http</feature>-->
+        <feature version="[2.10,3)">camel-netty4-http</feature>
         <feature version="[2.10,3)">camel-http4</feature>
         <bundle>mvn:org.jboss.fuse/camel-rest-client/${project.version}</bundle>
     </feature>

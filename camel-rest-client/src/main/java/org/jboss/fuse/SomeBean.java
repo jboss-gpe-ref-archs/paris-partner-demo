@@ -1,6 +1,9 @@
 package org.jboss.fuse;
 
+import org.apache.camel.Header;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -33,6 +36,11 @@ public class SomeBean {
         //0-11
         int index = new Random().nextInt(users.size());
         return users.get(index);
+    }
+
+    public static String getUser(@Header("CamelHttpQuery") String user) {
+        String result[] = user.split("=");
+        return result[1];
     }
 
 }
