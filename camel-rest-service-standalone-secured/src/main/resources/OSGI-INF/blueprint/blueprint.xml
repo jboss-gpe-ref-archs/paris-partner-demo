@@ -54,6 +54,13 @@
         <property name="identityService" ref="identityService"/>
     </bean>
 
+    <sslContextParameters id="sslParams" xmlns="http://camel.apache.org/schema/blueprint"
+                          secureSocketProtocol="TLS">
+        <keyManagers keyPassword="secUr1t8">
+            <keyStore resource="tls/serverstore.jks" password="secUr1t8"/>
+        </keyManagers>
+    </sslContextParameters>
+
     <camelContext xmlns="http://camel.apache.org/schema/blueprint">
         <propertyPlaceholder id="properties" location="blueprint:parameters"/>
         <routeBuilder ref="camelRestRoute"/>

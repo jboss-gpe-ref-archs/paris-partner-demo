@@ -64,7 +64,7 @@
                                             <type>xml</type>
                                             <classifier>features</classifier>
                                         </artifact>
-                                         <artifact>
+                                        <artifact>
                                             <file>target/classes/parameters.cfg</file>
                                             <type>cfg</type>
                                             <classifier>parameters</classifier>
@@ -73,6 +73,16 @@
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+
+                    <!-- Fabric8 v1 -->
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>fabric8-maven-plugin</artifactId>
+                        <version>${fabric8.version}</version>
+                        <configuration>
+                            <ignoreProject>true</ignoreProject>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

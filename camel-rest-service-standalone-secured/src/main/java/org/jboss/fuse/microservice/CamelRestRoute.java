@@ -5,6 +5,9 @@ import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.util.jsse.KeyManagersParameters;
+import org.apache.camel.util.jsse.KeyStoreParameters;
+import org.apache.camel.util.jsse.SSLContextParameters;
 
 public class CamelRestRoute extends RouteBuilder {
 
@@ -17,8 +20,9 @@ public class CamelRestRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         restConfiguration()
-                .component("jetty").contextPath("/camel/rest").scheme("http")
+                .component("jetty").contextPath("/camel/rest").scheme("https")
                 .endpointProperty("handlers","#securityHandler")
+                .endpointProperty("sslContextParameters","#sslParams")
             .host(HOST)
             .setPort(PORT);
 

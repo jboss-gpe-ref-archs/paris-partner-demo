@@ -22,14 +22,35 @@ features:install micro-camel-client
 http http://localhost:9090/camel/rest/users/charles/hello
 jcurl http://localhost:9090/camel/rest/users/charles/hello
 
-# Microservice Client with Jetty Secured 
+# Microservice Client with Jetty Secured (JAAS + SSL) 
 
 features:addurl mvn:org.jboss.fuse/camel-assembly/1.0-SNAPSHOT/xml/features
 features:install micro-camel-service-standalone-secured 
-features:install micro-camel-client
 
+* To get the Server certificate 
+
+openssl s_client -showcerts -connect localhost:9191
+
+http --verify=camel-rest-service-standalone-secured/src/main/resources/tls/server.pem https://localhost:9191/camel/rest/users/charles/hello
+http --verify=no https://localhost:9191/camel/rest/users/charles/hello
+http --verify=no -a admin:admin https://localhost:9191/camel/rest/users/charles/hello
+
+jcurl -k -u admin:admin https://localhost:9191/camel/rest/users/charles/hello
+
+# Using Fabric8 v1 
+
+mvn -Pf8-deploy
+
+
+# All - To control/check if the project is working
+
+features:addurl mvn:org.jboss.fuse/camel-assembly/1.0-SNAPSHOT/xml/features
+features:install micro-camel-service-servlet
+features:install micro-camel-service-standalone
+features:install micro-camel-service-standalone-secured
+
+http http://localhost:8181/camel/rest/users/charles/hello
+http http://localhost:9090/camel/rest/users/charles/hello
 http http://localhost:9191/camel/rest/users/charles/hello
 http -a admin:admin http://localhost:9191/camel/rest/users/charles/hello
-jcurl -u admin:admin http://localhost:9191/camel/rest/users/charles/hello
-
 

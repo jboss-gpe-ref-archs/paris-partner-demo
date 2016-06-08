@@ -157,7 +157,7 @@
                 <configuration>
                     <profile>micro-camel-standalone</profile>
                     <version>1.0</version>
-                    <features>camel-servlet</features>
+                    <features>camel-jetty</features>
                 </configuration>
             </plugin>
 

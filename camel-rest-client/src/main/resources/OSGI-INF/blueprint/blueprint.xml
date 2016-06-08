@@ -1,14 +1,16 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
-           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="
+           http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0
+             http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
            http://www.osgi.org/xmlns/blueprint/v1.0.0
-              http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+             https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
            http://camel.apache.org/schema/blueprint
               http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
     <!-- OSGI blueprint property placeholder -->
-    <cm:property-placeholder id="parameters" persistent-id="parameters">
+    <cm:property-placeholder id="parameters" persistent-id="parameters" update-strategy="reload">
         <cm:default-properties>
             <cm:property name="server-port" value="8181"/>
         </cm:default-properties>
