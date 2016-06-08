@@ -10,6 +10,8 @@
     <!-- OSGI blueprint property placeholder -->
     <cm:property-placeholder id="parameters" persistent-id="parameters"/>
 
+    <bean id="service" class="org.jboss.fuse.service.Message"/>
+
     <bean id="camelRestRoute" class="org.jboss.fuse.microservice.CamelRestRoute"/>
 
     <bean id="loginService" class="org.eclipse.jetty.jaas.JAASLoginService">

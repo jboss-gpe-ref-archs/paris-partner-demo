@@ -30,4 +30,10 @@
         <bundle>mvn:org.jboss.fuse/camel-rest-service-standalone/${project.version}</bundle>
     </feature>
 
+    <feature name="micro-camel-service-standalone-secured" version="1.0">
+        <feature>lib</feature>
+        <feature version="[2.10,3)">camel-jetty</feature>
+        <bundle>mvn:org.jboss.fuse/camel-rest-service-standalone-secured/${project.version}</bundle>
+    </feature>
+
 </features>

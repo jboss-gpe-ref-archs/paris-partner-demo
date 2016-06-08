@@ -10,16 +10,11 @@ public class CamelRestRoute extends RouteBuilder {
     @PropertyInject("server-standalone-port")
     private String PORT;
 
-    @BeanInject("")
-    private Service service;
-
     @Override
     public void configure() throws Exception {
 
         restConfiguration()
-            .component("jetty")
-            .contextPath("/camel/rest")
-                .endpointProperty("handlers","#securityHandler")
+            .component("jetty").contextPath("/camel/rest").scheme("http")
             .host(HOST)
             .setPort(PORT);
 
@@ -29,12 +24,7 @@ public class CamelRestRoute extends RouteBuilder {
                 .route()
                 .log(LoggingLevel.DEBUG,"HTTP Path : ${header.CamelHttpPath}")
                 .log(LoggingLevel.DEBUG,"HTTP Uri : ${header.CamelHttpUri}")
-                .process(new Processor() {
-                    public void process(Exchange exchange) throws Exception {
-                        String id = exchange.getIn().getHeader("id", String.class);
-                        exchange.getOut().setBody("Hello " + id + "! Welcome from machine : " + System.getProperty("karaf.name") );
-                    }
-                });
+                .beanRef("service","helloWorld");
 
     }
 }
